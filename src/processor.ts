@@ -2,7 +2,7 @@ export function setupProcessor(form: HTMLFormElement, resultElement: HTMLTextAre
     function handleUploadedFileContent(params: { fileContent: string; command: string }) {
         const lines = params.fileContent.split(/\r?\n/);
         const names = lines
-            .filter((it) => it.includes(`: ${params.command}`))
+            .filter((it) => it.toLowerCase().includes(`: ${params.command.toLowerCase()}`))
             .map((it) => /^\[\d{2}:\d{2}:\d{2}\]\s(.*):\s/.exec(it)?.[1])
             .filter(Boolean) as string[];
         resultElement.value = names.join('\n');
@@ -27,21 +27,4 @@ export function setupProcessor(form: HTMLFormElement, resultElement: HTMLTextAre
         });
         reader.readAsText(file);
     });
-
-    // fileElement.addEventListener('change', () => {
-    //     if (!fileElement.files) {
-    //         return;
-    //     }
-    //     const reader = new FileReader();
-
-    //     reader.addEventListener('load', (ev) => {
-    //         if (!ev.target?.result) {
-    //             alert('Cannot read text file');
-    //             return;
-    //         }
-    //         handleUploadedFileContent(ev.target.result as string);
-    //     });
-    //     reader.readAsText(fileElement.files[0]);
-    //     fileElement.value = '';
-    // });
 }
